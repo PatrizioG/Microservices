@@ -2,7 +2,7 @@ namespace Company.Consumers
 {
     using MassTransit;
 
-    public class ProductsConsumerDefinition :
+    internal class ProductsConsumerDefinition :
         ConsumerDefinition<ProductsConsumer>
     {
         protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator, IConsumerConfigurator<ProductsConsumer> consumerConfigurator)

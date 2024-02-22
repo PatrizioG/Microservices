@@ -16,7 +16,8 @@ internal class ProductsConsumer : IConsumer<GetAllProducts>
 
     public Task Consume(ConsumeContext<GetAllProducts> context)
     {
-        _context.Products
+        //context.Publish
+        //_context.Products
         return Task.CompletedTask;
     }
 }
