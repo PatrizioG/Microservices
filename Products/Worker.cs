@@ -1,23 +1,23 @@
-﻿using MassTransit;
+﻿using Common.Contracts;
+using MassTransit;
 
-namespace Products
+namespace Products;
+
+internal class Worker : BackgroundService
 {
-    internal class Worker : BackgroundService
+    readonly IBus _bus;
+
+    public Worker(IBus bus)
     {
-        readonly IBus _bus;
+        _bus = bus;
+    }
 
-        public Worker(IBus bus)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        while (!stoppingToken.IsCancellationRequested)
         {
-            _bus = bus;
-        }
-
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                //await _bus.Publish(new GettingStarted { Value = $"The time is {DateTimeOffset.Now}" }, stoppingToken);
-                //await Task.Delay(1000, stoppingToken);
-            }
+            await _bus.Publish(new GetAllProducts(), stoppingToken);
+            await Task.Delay(1000, stoppingToken);
         }
     }
 }

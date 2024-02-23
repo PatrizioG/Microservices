@@ -1,6 +1,6 @@
 ﻿namespace Products.Models
 {
-    internal class Category
+    public class Category
     {
         public string Id { get; set; }
         public string? FatherId { get; set; }

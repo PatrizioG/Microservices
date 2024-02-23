@@ -2,7 +2,7 @@
 
 namespace Products.Models
 {
-    internal class ProductsContext : DbContext
+    public class ProductsContext : DbContext
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }

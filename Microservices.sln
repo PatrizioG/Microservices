@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Users", "Users\Users.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orders", "Orders\Orders.csproj", "{DF17C6BE-A772-436F-B15C-B7C5462ED23F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{581CB3A5-88B3-4E9F-84A6-DD40D384450E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{581CB3A5-88B3-4E9F-84A6-DD40D384450E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{543FEDEC-55DE-48D3-AEEC-B08332AF6BCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{581CB3A5-88B3-4E9F-84A6-DD40D384450E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{581CB3A5-88B3-4E9F-84A6-DD40D384450E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{581CB3A5-88B3-4E9F-84A6-DD40D384450E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{543FEDEC-55DE-48D3-AEEC-B08332AF6BCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{543FEDEC-55DE-48D3-AEEC-B08332AF6BCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{543FEDEC-55DE-48D3-AEEC-B08332AF6BCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{543FEDEC-55DE-48D3-AEEC-B08332AF6BCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

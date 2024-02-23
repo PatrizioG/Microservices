@@ -1,10 +1,9 @@
-﻿namespace Products.Models
+﻿namespace API.Products
 {
-    public class Product
+    public class GetProductByIdResponseDto
     {
         public string Id { get; set; }
         public string Name { get; set; }
         public string CategoryId { get; set; }
-        public Category Category { get; set; }
     }
 }
