@@ -1,14 +1,18 @@
-namespace Orders
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            var builder = Host.CreateApplicationBuilder(args);
-            builder.Services.AddHostedService<Worker>();
+using Common.Services;
 
-            var host = builder.Build();
-            host.Run();
-        }
+namespace Orders;
+
+public class Program
+{
+    public static async Task Main(string[] args)
+    {
+        await CreateHostBuilder(args).Build().RunAsync();
     }
+
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureServices((hostContext, services) =>
+            {
+                services.AddDefaultMassTransit();
+            });
 }

@@ -1,23 +1,26 @@
-# Prerequisites
+# Microservices
 
-## Docker
+A small project to test the functionality of a microservice architecture
+## Prerequisites
+
+- Docker
 https://docs.docker.com/get-docker/
 
-## Ef core tools
+- Ef core tools
 `dotnet tool install --global dotnet-ef`
 
-# Apply migrations
+## Apply migrations
 `cd Microservices`
 `cd Products`
 `dotnet ef database update`
 
-# Launch the Microservices
+## How to launch Microservices
 
-## Launch RabbitMQ
+- Launch RabbitMQ
 `docker run -p 15672:15672 -p 5672:5672 masstransit/rabbitmq`
 
-## Launch Products microservice
-`cd Microservices`
-`cd Products`
-`dotnet run`
+- Launch all the microservice (from different terminals)
+`dotnet run --project Products`
+`dotnet run --project Users`
+`dotnet run --project Orders`
 

@@ -1,10 +1,11 @@
-﻿using Common.Contracts;
+﻿using API.Mapper;
+using Common.Contracts;
 using FastEndpoints;
 using MassTransit;
 
 namespace API.Products
 {
-    public class GetAllProducts : EndpointWithoutRequest
+    public class GetAllProducts : EndpointWithoutRequest<GetAllProductsResponseDto>
     {
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly IRequestClient<Common.Contracts.GetAllProducts> _requestClient;
@@ -23,9 +24,14 @@ namespace API.Products
 
         public override async Task HandleAsync(CancellationToken cancellationToken)
         {
-            // await _publishEndpoint.Publish<GetAllProducts>(new GetAllProducts());
-            var response = await _requestClient.GetResponse<AllProductsResult>(new { }, cancellationToken);
-            await SendAsync(response.Message);
+            var response = await _requestClient.GetResponse<GetAllProductsResult>(new { }, cancellationToken);
+
+            await SendAsync(new GetAllProductsResponseDto
+            {
+                Products = response.Message.Products
+                .Select(x => ProductMapper.MapProduct(x))
+                .ToList()
+            });
         }
     }
 }

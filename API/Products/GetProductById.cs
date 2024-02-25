@@ -1,9 +1,11 @@
-﻿using FastEndpoints;
+﻿using API.CommonDtos;
+using API.Mapper;
+using FastEndpoints;
 using MassTransit;
 
 namespace API.Products
 {
-    public class GetProductById : Endpoint<GetProductByIdRequestDto, GetProductByIdResponseDto>
+    public class GetProductById : Endpoint<GetProductByIdRequestDto, ProductDto>
     {
         private readonly IRequestClient<Common.Contracts.GetProductById> _requestClient;
 
@@ -18,10 +20,10 @@ namespace API.Products
             AllowAnonymous();
         }
 
-        public override async Task<GetProductByIdResponseDto> ExecuteAsync(GetProductByIdRequestDto req, CancellationToken cancellationToken)
+        public override async Task<ProductDto> ExecuteAsync(GetProductByIdRequestDto req, CancellationToken cancellationToken)
         {
-            var response = await _requestClient.GetResponse<Common.Contracts.ProductByIdResult>(new { }, cancellationToken);
-            return new GetProductByIdResponseDto { };
+            var response = await _requestClient.GetResponse<Common.Contracts.Product>(new Common.Contracts.GetProductById { Id = req.Id }, cancellationToken);
+            return ProductMapper.MapProduct(response.Message);
         }
     }
 }

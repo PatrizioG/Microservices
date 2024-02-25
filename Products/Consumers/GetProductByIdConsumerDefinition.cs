@@ -1,12 +1,12 @@
+﻿using MassTransit;
+
 namespace Products.Consumers
 {
-    using MassTransit;
-
-    internal class GetAllProductsConsumerDefinition : ConsumerDefinition<GetAllProductsConsumer>
+    internal class GetProductByIdConsumerDefinition : ConsumerDefinition<GetProductByIdConsumer>
     {
         protected override void ConfigureConsumer(
             IReceiveEndpointConfigurator endpointConfigurator,
-            IConsumerConfigurator<GetAllProductsConsumer> consumerConfigurator,
+            IConsumerConfigurator<GetProductByIdConsumer> consumerConfigurator,
             IRegistrationContext context)
         {
             endpointConfigurator.UseMessageRetry(r => r.Intervals(500, 1000));

@@ -4,7 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<NoWarn>CA2016</NoWarn>
+		<NoWarn>CA2016,IDE0290</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
