@@ -1,4 +1,6 @@
 using Common.Services;
+using Microsoft.EntityFrameworkCore;
+using Orders.Models;
 
 namespace Orders;
 
@@ -13,6 +15,11 @@ public class Program
         Host.CreateDefaultBuilder(args)
             .ConfigureServices((hostContext, services) =>
             {
-                services.AddDefaultMassTransit();
+                services
+                    .AddDefaultMassTransit()
+                    .AddDbContext<OrdersDbContext>(options =>
+                    {
+                        options.UseSqlite("Data Source=Orders.db");
+                    });
             });
 }

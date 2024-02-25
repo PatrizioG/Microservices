@@ -43,9 +43,7 @@ public class Program
                    .AddDefaultMassTransit()
                    .AddDbContext<ProductsDbContext>(options =>
                    {
-                       options
-                        .UseInMemoryDatabase("ProductsDb")
-                        .EnableSensitiveDataLogging(true);
+                       options.UseInMemoryDatabase("ProductsDb");
                    });
             });
 }
