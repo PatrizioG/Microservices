@@ -1,18 +1,35 @@
-﻿using FastEndpoints;
+﻿using API.CommonDtos;
+using API.Mapper;
+using FastEndpoints;
+using MassTransit;
 
-namespace API.Orders
+namespace API.Orders;
+
+public class GetAllOrders : EndpointWithoutRequest<List<OrderDto>>
 {
-    public class GetAllOrders : EndpointWithoutRequest
+    private readonly IRequestClient<Common.Contracts.GetAllOrders> _requestClient;
+
+    public GetAllOrders(IRequestClient<Common.Contracts.GetAllOrders> requestClient)
     {
-        public override void Configure()
+        _requestClient = requestClient;
+    }
+
+    public override void Configure()
+    {
+        Get("orders");
+        AllowAnonymous();
+    }
+
+    public override async Task HandleAsync(CancellationToken ct)
+    {
+        var response = await _requestClient.GetResponse<Common.Contracts.OrdersResult>(new {}, ct);
+        List<OrderDto> result = [];
+
+        foreach (var order in response.Message.Orders)
         {
-            Get("orders");
-            AllowAnonymous();
+            result.Add(OrderMapper.MapOrder(order));
         }
 
-        public override Task HandleAsync(CancellationToken ct)
-        {
-            return base.HandleAsync(ct);
-        }
+        await SendAsync(result);
     }
 }
