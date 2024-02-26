@@ -1,4 +1,5 @@
-﻿using Common.Contracts;
+﻿using API.Mapper;
+using Common.Contracts;
 using FastEndpoints;
 using MassTransit;
 
@@ -21,9 +22,16 @@ namespace API.Orders
 
         public override async Task HandleAsync(CreateOrderRequestDto req, CancellationToken ct)
         {
-            var response = await _requestClient.GetResponse<CreateOrderResult>(new Common.Contracts.CreateOrder { UserId = req.UserId!, ProductIds = req.ProductIds }, ct);
-            // TODO map dto
-            await SendAsync(response.Message);
+            var response = await _requestClient.GetResponse<Common.Contracts.Order>(new Common.Contracts.CreateOrder
+            {
+                UserId = req.UserId!,
+                OrderLines = req.OrderLines
+                .Select(x => new CreateOrderLine { ProductId = x.ProductId!, Quantity = x.Quantity })
+                .ToList()
+
+            }, ct);
+
+            await SendAsync(OrderMapper.MapOrder(response.Message));
         }
     }
 }

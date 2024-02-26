@@ -30,6 +30,7 @@ namespace Orders.Migrations
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     ProductId = table.Column<string>(type: "TEXT", nullable: false),
+                    Quantity = table.Column<double>(type: "REAL", nullable: false),
                     Price = table.Column<double>(type: "REAL", nullable: false),
                     OrderEntityId = table.Column<string>(type: "TEXT", nullable: true)
                 },

@@ -1,12 +1,13 @@
 ﻿using Common.Contracts;
 using MassTransit;
+using Orders.Mappers;
 using Orders.Models;
 
 namespace Orders.Consumers
 {
     public class CreateOrderConsumer : IConsumer<CreateOrder>
     {
-        private readonly OrdersDbContext ordersContext;
+        private readonly OrdersDbContext _ordersContext;
         private readonly ILogger<CreateOrderConsumer> _logger;
         private readonly IRequestClient<GetUserById> _userRequestClient;
         private readonly IRequestClient<GetProductById> _productRequestClient;
@@ -17,7 +18,7 @@ namespace Orders.Consumers
             IRequestClient<Common.Contracts.GetUserById> userRequestClient,
             IRequestClient<Common.Contracts.GetProductById> productRequestClient)
         {
-            ordersContext = context;
+            _ordersContext = context;
             _logger = logger;
             _userRequestClient = userRequestClient;
             _productRequestClient = productRequestClient;
@@ -31,13 +32,13 @@ namespace Orders.Consumers
             Response<User> response = await _userRequestClient.GetResponse<Common.Contracts.User>(new Common.Contracts.GetUserById { Id = context.Message.UserId });
             User user = response.Message;
 
-            List<Product> products = [];
+            List<(Product, double)> products = [];
 
-            foreach (var productId in context.Message.ProductIds)
+            foreach (var orderLine in context.Message.OrderLines)
             {
                 // Get product or throw
-                var response2 = await _productRequestClient.GetResponse<Common.Contracts.Product>(new Common.Contracts.GetProductById { Id = productId });
-                products.Add(response2.Message);
+                var response2 = await _productRequestClient.GetResponse<Common.Contracts.Product>(new Common.Contracts.GetProductById { Id = orderLine.ProductId });
+                products.Add((response2.Message, orderLine.Quantity));
             }
 
             var orderEntity = new OrderEntity()
@@ -45,20 +46,26 @@ namespace Orders.Consumers
                 Id = Guid.NewGuid().ToString(),
                 OrderDateUtc = DateTime.UtcNow,
                 UserId = user.Id,
-                Lines = products.Select(x => new OrderLineEntity
+                Lines = products.Select(tuple =>
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    ProductId = x.Id,
-                    Price = x.Price,
+                    var (product, quantity) = tuple;
+
+                    return new OrderLineEntity
+                    {
+
+                        Id = Guid.NewGuid().ToString(),
+                        ProductId = product.Id,
+                        Price = product.Price,
+                        Quantity = quantity
+                    };
 
                 }).ToList()
             };
 
-            await ordersContext.Orders.AddAsync(orderEntity);
-            await ordersContext.SaveChangesAsync();
+            await _ordersContext.Orders.AddAsync(orderEntity);
+            await _ordersContext.SaveChangesAsync();
 
-            var result = new CreateOrderResult();
-            await context.RespondAsync<CreateOrderResult>(result);
+            await context.RespondAsync<Order>(OrderMapper.MapOrder(orderEntity, products.Select(x => x.Item1).ToList(), user));
         }
     }
 }

@@ -2,9 +2,9 @@
 {
     public class OrderLineDto
     {
-        public string ProductCode { get; set; } = string.Empty;
-        public string ProductDescription { get; set; } = string.Empty;
-        public string ProductPrice { get; set; } = string.Empty;
+        public string ProductName { get; set; } = string.Empty;
         public string ProductCategory { get; set; } = string.Empty;
+        public double Price { get; set; }
+        public double Quantity { get; set; }
     }
 }

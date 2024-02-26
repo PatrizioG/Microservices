@@ -11,7 +11,7 @@ using Orders.Models;
 namespace Orders.Migrations
 {
     [DbContext(typeof(OrdersDbContext))]
-    [Migration("20240225101157_Initial")]
+    [Migration("20240226064956_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -51,6 +51,9 @@ namespace Orders.Migrations
                     b.Property<string>("ProductId")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 

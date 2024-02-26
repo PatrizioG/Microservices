@@ -1,6 +1,6 @@
-﻿namespace Orders.Models
+﻿namespace Common.Contracts
 {
-    public class OrderLineEntity
+    public class OrderLine
     {
         public string Id { get; set; } = string.Empty;
         public string ProductId { get; set; } = string.Empty;

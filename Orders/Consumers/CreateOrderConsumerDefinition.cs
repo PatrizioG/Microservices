@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MassTransit;
 
 namespace Orders.Consumers
 {
-    public class CreateOrderConsumerDefinition
+    public class CreateOrderConsumerDefinition : ConsumerDefinition<CreateOrderConsumer>
     {
+        protected override void ConfigureConsumer(
+            IReceiveEndpointConfigurator endpointConfigurator,
+            IConsumerConfigurator<CreateOrderConsumer> consumerConfigurator,
+            IRegistrationContext context)
+        {
+            endpointConfigurator.UseMessageRetry(r => r.Intervals(500, 1000));
+        }
     }
 }
