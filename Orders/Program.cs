@@ -1,4 +1,5 @@
 using Common.Services;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Orders.Models;
 
@@ -8,7 +9,12 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
-        await CreateHostBuilder(args).Build().RunAsync();
+        var host = CreateHostBuilder(args).Build();
+
+        var scope = host.Services.CreateAsyncScope();
+        var productsDbContext = scope.ServiceProvider.GetRequiredService<OrdersDbContext>();
+        productsDbContext.Database.EnsureCreated();
+        await host.RunAsync();
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>

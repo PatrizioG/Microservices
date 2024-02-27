@@ -17,13 +17,10 @@ https://docs.docker.com/get-docker/
 https://sqlitebrowser.org/
 or
 https://www.jetbrains.com/datagrip/
-- 
-## Apply migrations
-Orders project uses a sqlite db and therefore is need to apply migrations.
-Other projects use in-memory databases with hardcoded data.
 
-`cd Orders`
-`dotnet ef database update`
+## Apply migrations doesn't needed
+Orders project uses a sqlite db but due to the testing nature of the project, migrations are applied at the startup phase.
+Other projects use in-memory databases with hardcoded data and therefore do not require migration.
 
 ## How to launch Microservices
 

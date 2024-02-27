@@ -40,6 +40,7 @@ namespace Orders.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("OrderEntityId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<double>("Price")
@@ -63,7 +64,9 @@ namespace Orders.Migrations
                 {
                     b.HasOne("Orders.Models.OrderEntity", null)
                         .WithMany("Lines")
-                        .HasForeignKey("OrderEntityId");
+                        .HasForeignKey("OrderEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Orders.Models.OrderEntity", b =>

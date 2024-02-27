@@ -2,7 +2,7 @@
 
 namespace API.Orders;
 
-public class GetOrderByIdRequestDto
+public class DeleteOrderRequestDto
 {
     [Required]
     public string? Id { get; set; }

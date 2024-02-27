@@ -32,11 +32,11 @@ public class GetAllOrdersConsumer : IConsumer<GetAllOrders>
             .Include(p => p.Lines)
             .ToListAsync();
 
-        if (orders == null)
-            throw new ArgumentException("Orders not found");
-
-        if (orders.Count == 0)
-            throw new ArgumentException("Orders not found");
+        if (orders == null || orders.Count == 0)
+        {
+            await context.RespondAsync(new Common.Contracts.OrdersResult());
+            return;
+        }
 
         var result = new Common.Contracts.OrdersResult();
 

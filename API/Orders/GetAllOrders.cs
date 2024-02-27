@@ -26,9 +26,7 @@ public class GetAllOrders : EndpointWithoutRequest<List<OrderDto>>
         List<OrderDto> result = [];
 
         foreach (var order in response.Message.Orders)
-        {
             result.Add(OrderMapper.MapOrder(order));
-        }
 
         await SendAsync(result);
     }

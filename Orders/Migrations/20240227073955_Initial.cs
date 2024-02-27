@@ -29,10 +29,10 @@ namespace Orders.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
+                    OrderEntityId = table.Column<string>(type: "TEXT", nullable: false),
                     ProductId = table.Column<string>(type: "TEXT", nullable: false),
                     Quantity = table.Column<double>(type: "REAL", nullable: false),
-                    Price = table.Column<double>(type: "REAL", nullable: false),
-                    OrderEntityId = table.Column<string>(type: "TEXT", nullable: true)
+                    Price = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,7 +41,8 @@ namespace Orders.Migrations
                         name: "FK_OrderLineEntity_Orders_OrderEntityId",
                         column: x => x.OrderEntityId,
                         principalTable: "Orders",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

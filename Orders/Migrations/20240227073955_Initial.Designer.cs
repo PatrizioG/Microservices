@@ -11,7 +11,7 @@ using Orders.Models;
 namespace Orders.Migrations
 {
     [DbContext(typeof(OrdersDbContext))]
-    [Migration("20240226064956_Initial")]
+    [Migration("20240227073955_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -43,6 +43,7 @@ namespace Orders.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("OrderEntityId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<double>("Price")
@@ -66,7 +67,9 @@ namespace Orders.Migrations
                 {
                     b.HasOne("Orders.Models.OrderEntity", null)
                         .WithMany("Lines")
-                        .HasForeignKey("OrderEntityId");
+                        .HasForeignKey("OrderEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Orders.Models.OrderEntity", b =>
