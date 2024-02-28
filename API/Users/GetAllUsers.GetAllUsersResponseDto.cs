@@ -1,9 +1,8 @@
 ﻿using API.CommonDtos;
 
-namespace API.Users
+namespace API.Users;
+
+public class GetAllUsersResponseDto
 {
-    public class GetAllUsersResponseDto
-    {
-        public List<UserDto> Users { get; set; } = [];
-    }
+    public List<UserDto> Users { get; set; } = [];
 }

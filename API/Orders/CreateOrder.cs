@@ -1,37 +1,36 @@
-﻿using API.Mapper;
+﻿using API.CommonDtos;
+using API.Mapper;
 using Common.Contracts;
 using FastEndpoints;
 using MassTransit;
 
-namespace API.Orders
+namespace API.Orders;
+
+public class CreateOrder : Endpoint<CreateOrderRequestDto, OrderDto>
 {
-    public class CreateOrder : Endpoint<CreateOrderRequestDto>
+    private readonly IRequestClient<Common.Contracts.CreateOrder> _requestClient;
+
+    public CreateOrder(IRequestClient<Common.Contracts.CreateOrder> requestClient)
     {
-        private readonly IRequestClient<Common.Contracts.CreateOrder> _requestClient;
+        _requestClient = requestClient;
+    }
 
-        public CreateOrder(IRequestClient<Common.Contracts.CreateOrder> requestClient)
-        {
-            _requestClient = requestClient;
-        }
+    public override void Configure()
+    {
+        Post("orders");
+        AllowAnonymous();
+    }
 
-        public override void Configure()
+    public override async Task HandleAsync(CreateOrderRequestDto req, CancellationToken ct)
+    {
+        var response = await _requestClient.GetResponse<Common.Contracts.Order>(new Common.Contracts.CreateOrder
         {
-            Post("orders");
-            AllowAnonymous();
-        }
-
-        public override async Task HandleAsync(CreateOrderRequestDto req, CancellationToken ct)
-        {
-            var response = await _requestClient.GetResponse<Common.Contracts.Order>(new Common.Contracts.CreateOrder
-            {
-                UserId = req.UserId!,
-                OrderLines = req.OrderLines
+            UserId = req.UserId!,
+            OrderLines = req.OrderLines
                 .Select(x => new CreateOrderLine { ProductId = x.ProductId!, Quantity = x.Quantity })
                 .ToList()
+        }, ct);
 
-            }, ct);
-
-            await SendAsync(OrderMapper.MapOrder(response.Message));
-        }
+        await SendAsync(OrderMapper.MapOrder(response.Message), cancellation: ct);
     }
 }

@@ -23,9 +23,6 @@ public class Program
             {
                 services
                     .AddDefaultMassTransit()
-                    .AddDbContext<OrdersDbContext>(options =>
-                    {
-                        options.UseSqlite("Data Source=Orders.db");
-                    });
+                    .AddDbContext<OrdersDbContext>(options => { options.UseSqlite("Data Source=Orders.db"); });
             });
 }

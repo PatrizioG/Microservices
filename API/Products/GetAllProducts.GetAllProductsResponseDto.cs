@@ -1,9 +1,8 @@
 ﻿using API.CommonDtos;
 
-namespace API.Products
+namespace API.Products;
+
+public class GetAllProductsResponseDto
 {
-    public class GetAllProductsResponseDto
-    {
-        public List<ProductDto> Products { get; set; } = [];
-    }
+    public List<ProductDto> Products { get; set; } = [];
 }

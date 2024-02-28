@@ -32,7 +32,7 @@ public class GetAllOrdersConsumer : IConsumer<GetAllOrders>
             .Include(p => p.Lines)
             .ToListAsync();
 
-        if (orders == null || orders.Count == 0)
+        if (orders.Count == 0)
         {
             await context.RespondAsync(new Common.Contracts.OrdersResult());
             return;
@@ -48,7 +48,9 @@ public class GetAllOrdersConsumer : IConsumer<GetAllOrders>
             if (!userCache.TryGetValue(order.UserId, out User? user))
             {
                 // Get user or throw
-                Response<User> response = await _userRequestClient.GetResponse<Common.Contracts.User>(new Common.Contracts.GetUserById { Id = order.UserId });
+                Response<User> response =
+                    await _userRequestClient.GetResponse<Common.Contracts.User>(new Common.Contracts.GetUserById
+                        { Id = order.UserId });
                 user = response.Message;
                 userCache.Add(order.UserId, user);
             }
@@ -59,7 +61,9 @@ public class GetAllOrdersConsumer : IConsumer<GetAllOrders>
                 if (!productCache.TryGetValue(orderLine.ProductId, out Product? product))
                 {
                     // Get product or throw
-                    var response2 = await _productRequestClient.GetResponse<Common.Contracts.Product>(new Common.Contracts.GetProductById { Id = orderLine.ProductId });
+                    var response2 =
+                        await _productRequestClient.GetResponse<Common.Contracts.Product>(
+                            new Common.Contracts.GetProductById { Id = orderLine.ProductId });
                     product = response2.Message;
                     productCache.Add(orderLine.ProductId, product);
                 }

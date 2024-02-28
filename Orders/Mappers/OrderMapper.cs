@@ -1,33 +1,29 @@
 ﻿using Common.Contracts;
 using Orders.Models;
 
-namespace Orders.Mappers
+namespace Orders.Mappers;
+
+internal static class OrderMapper
 {
-    internal static class OrderMapper
+    public static Order MapOrder(OrderEntity orderEntity, List<Product> products, User user)
     {
-        public static Order MapOrder(OrderEntity orderEntity, List<Product> products, User user)
+        var lines = orderEntity.Lines.Select(line => new OrderLine
         {
-            var lines = orderEntity.Lines.Select(line =>
-            {
-                return new OrderLine
-                {
-                    Id = line.Id,
-                    ProductId = line.ProductId,
-                    Price = line.Price,
-                    Quantity = line.Quantity
-                };
+            Id = line.Id,
+            ProductId = line.ProductId,
+            Price = line.Price,
+            Quantity = line.Quantity
+            
+        }).ToList();
 
-            }).ToList();
-
-            return new Order
-            {
-                Id = orderEntity.Id,
-                OrderDateUtc = orderEntity.OrderDateUtc,
-                UserId = orderEntity.UserId,
-                OrderLines = lines,
-                Products = products,
-                User = user
-            };
-        }
+        return new Order
+        {
+            Id = orderEntity.Id,
+            OrderDateUtc = orderEntity.OrderDateUtc,
+            UserId = orderEntity.UserId,
+            OrderLines = lines,
+            Products = products,
+            User = user
+        };
     }
 }

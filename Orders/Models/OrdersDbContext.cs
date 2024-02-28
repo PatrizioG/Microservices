@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Orders.Models
+namespace Orders.Models;
+
+public class OrdersDbContext : DbContext
 {
-    public class OrdersDbContext : DbContext
+    public DbSet<OrderEntity> Orders { get; set; }
+
+    public OrdersDbContext(DbContextOptions<OrdersDbContext> options) : base(options)
     {
-        public DbSet<OrderEntity> Orders { get; set; }
-        public OrdersDbContext(DbContextOptions<OrdersDbContext> options) : base(options) { }
     }
 }

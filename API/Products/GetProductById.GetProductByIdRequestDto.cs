@@ -1,7 +1,6 @@
-﻿namespace API.Products
+﻿namespace API.Products;
+
+public class GetProductByIdRequestDto
 {
-    public class GetProductByIdRequestDto
-    {
-        public string Id { get; set; }
-    }
+    public string Id { get; set; } = string.Empty;
 }

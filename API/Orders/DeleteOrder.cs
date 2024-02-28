@@ -3,7 +3,7 @@ using MassTransit;
 
 namespace API.Orders;
 
-public class DeleteOrder : Endpoint<DeleteOrderRequestDto>
+public class DeleteOrder : Endpoint<DeleteOrderRequestDto, Common.Contracts.GenericResult>
 {
     private readonly IRequestClient<Common.Contracts.DeleteOrder> _requestClient;
 
@@ -17,9 +17,13 @@ public class DeleteOrder : Endpoint<DeleteOrderRequestDto>
         Delete("orders/{Id}");
         AllowAnonymous();
     }
-    public override async Task<object?> ExecuteAsync(DeleteOrderRequestDto req, CancellationToken ct)
+
+    public override async Task<Common.Contracts.GenericResult> ExecuteAsync(DeleteOrderRequestDto req, CancellationToken ct)
     {
-        var response = await _requestClient.GetResponse<Common.Contracts.GenericResult>(new Common.Contracts.DeleteOrder { Id = req.Id! }, ct);
+        var response =
+            await _requestClient.GetResponse<Common.Contracts.GenericResult>(
+                new Common.Contracts.DeleteOrder { Id = req.Id! }, ct);
+        
         return response.Message;
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace Common.Contracts
+﻿namespace Common.Contracts;
+
+public class GetProductById
 {
-    public class GetProductById
-    {
-        public string Id { get; set; } = string.Empty;
-    }
+    public string Id { get; set; } = string.Empty;
 }

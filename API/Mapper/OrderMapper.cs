@@ -14,17 +14,17 @@ internal static class OrderMapper
             OrderLines = order.OrderLines.Select(line =>
             {
                 var product = order.Products.FirstOrDefault(p => p.Id.Equals(line.ProductId))
-                ?? throw new ArgumentException($"Product {line.ProductId} not found");
+                              ?? throw new ArgumentException($"Product {line.ProductId} not found");
 
                 var productDto = ProductMapper.MapProduct(product);
                 return new CommonDtos.OrderLineDto
                 {
+                    Id = line.Id,
                     ProductName = order.Products.First(p => p.Id.Equals(line.ProductId)).Name,
                     Price = line.Price,
                     Quantity = line.Quantity,
                     ProductCategory = productDto.Category
                 };
-
             }).ToList()
         };
     }

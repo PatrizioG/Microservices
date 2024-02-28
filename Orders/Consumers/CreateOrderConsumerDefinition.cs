@@ -1,15 +1,14 @@
 ﻿using MassTransit;
 
-namespace Orders.Consumers
+namespace Orders.Consumers;
+
+public class CreateOrderConsumerDefinition : ConsumerDefinition<CreateOrderConsumer>
 {
-    public class CreateOrderConsumerDefinition : ConsumerDefinition<CreateOrderConsumer>
+    protected override void ConfigureConsumer(
+        IReceiveEndpointConfigurator endpointConfigurator,
+        IConsumerConfigurator<CreateOrderConsumer> consumerConfigurator,
+        IRegistrationContext context)
     {
-        protected override void ConfigureConsumer(
-            IReceiveEndpointConfigurator endpointConfigurator,
-            IConsumerConfigurator<CreateOrderConsumer> consumerConfigurator,
-            IRegistrationContext context)
-        {
-            endpointConfigurator.UseMessageRetry(r => r.Intervals(500, 1000));
-        }
+        endpointConfigurator.UseMessageRetry(r => r.Intervals(500, 1000));
     }
 }

@@ -1,4 +1,3 @@
-
 using Common.Services;
 using FastEndpoints;
 using FastEndpoints.Swagger;

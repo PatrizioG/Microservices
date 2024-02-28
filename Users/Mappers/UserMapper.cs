@@ -1,18 +1,17 @@
 ﻿using Users.Models;
 
-namespace Users.Mappers
+namespace Users.Mappers;
+
+internal static class UserMapper
 {
-    internal static class UserMapper
+    public static Common.Contracts.User MapUser(UserEntity userEntity)
     {
-        public static Common.Contracts.User MapUser(UserEntity userEntity)
+        return new Common.Contracts.User
         {
-            return new Common.Contracts.User
-            {
-                Id = userEntity.Id,
-                Name = userEntity.Name,
-                Email = userEntity.Email,
-                Surname = userEntity.Surname
-            };
-        }
+            Id = userEntity.Id,
+            Name = userEntity.Name,
+            Email = userEntity.Email,
+            Surname = userEntity.Surname
+        };
     }
 }

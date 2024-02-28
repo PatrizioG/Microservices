@@ -22,7 +22,10 @@ public class GetOrderById : Endpoint<GetOrderByIdRequestDto, OrderDto>
 
     public override async Task HandleAsync(GetOrderByIdRequestDto req, CancellationToken ct)
     {
-        var response = await _requestClient.GetResponse<Common.Contracts.Order>(new Common.Contracts.GetOrderById { Id = req.Id! }, ct);
-        await SendAsync(OrderMapper.MapOrder(response.Message));
+        var response =
+            await _requestClient.GetResponse<Common.Contracts.Order>(new Common.Contracts.GetOrderById { Id = req.Id! },
+                ct);
+        
+        await SendAsync(OrderMapper.MapOrder(response.Message), cancellation: ct);
     }
 }

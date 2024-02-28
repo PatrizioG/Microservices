@@ -1,4 +1,5 @@
-﻿namespace Common.Contracts
+﻿namespace Common.Contracts;
+
+public class GetAllProducts
 {
-    public class GetAllProducts { }
 }

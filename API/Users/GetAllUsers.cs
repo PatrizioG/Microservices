@@ -32,8 +32,7 @@ public class GetAllUsers : EndpointWithoutRequest<GetAllUsersResponseDto>
                 Name = x.Name,
                 Surname = x.Surname,
                 Email = x.Email,
-
             }).ToList(),
-        });
+        }, cancellation: cancellationToken);
     }
 }

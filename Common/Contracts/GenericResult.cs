@@ -1,7 +1,6 @@
-﻿namespace Common.Contracts
+﻿namespace Common.Contracts;
+
+public class GenericResult
 {
-    public class GenericResult
-    {
-        public string Message { get; set; } = string.Empty;
-    }
+    public string Message { get; set; } = string.Empty;
 }

@@ -1,3 +1,5 @@
 ﻿namespace Common.Contracts;
 
-public class GetAllUsers { }
+public class GetAllUsers
+{
+}

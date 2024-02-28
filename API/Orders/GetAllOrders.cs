@@ -22,12 +22,12 @@ public class GetAllOrders : EndpointWithoutRequest<List<OrderDto>>
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var response = await _requestClient.GetResponse<Common.Contracts.OrdersResult>(new {}, ct);
+        var response = await _requestClient.GetResponse<Common.Contracts.OrdersResult>(new { }, ct);
         List<OrderDto> result = [];
 
         foreach (var order in response.Message.Orders)
             result.Add(OrderMapper.MapOrder(order));
 
-        await SendAsync(result);
+        await SendAsync(result, cancellation: ct);
     }
 }
