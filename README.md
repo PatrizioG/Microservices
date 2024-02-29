@@ -11,9 +11,9 @@ https://docs.docker.com/get-docker/
 https://sqlitebrowser.org/
 or
 https://www.jetbrains.com/datagrip/
-## Apply migrations doesn't needed
-Orders project uses a sqlite db but due to the testing nature of the project migrations are applied at the startup phase.
-Other projects use in-memory databases with hardcoded data and therefore do not require migration.
+## Don't apply migrations
+- In Orders microservice are automatically applied at startup (due to the testing nature of the project).
+- Other microservices uses in-memory databases with hardcoded data.
 ## How to launch Microservices
 - Launch RabbitMQ
   - `docker run -p 15672:15672 -p 5672:5672 masstransit/rabbitmq`
