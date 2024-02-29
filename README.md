@@ -5,8 +5,6 @@ A small project to test the functionality of a microservice architecture
 https://dotnet.microsoft.com/en-us/download/dotnet/8.0
 - Docker
 https://docs.docker.com/get-docker/
-- Ef core tools
-`dotnet tool install --global dotnet-ef`
 - SQLite browsers
 https://sqlitebrowser.org/
 or
